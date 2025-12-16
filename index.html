@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <script
+      id="sap-ui-bootstrap"
+      src="https://ui5.sap.com/resources/sap-ui-core.js"
+      data-sap-ui-libs="sap.m,sap.uxap"
+      data-sap-ui-theme="sap_fiori_3"
+      data-sap-ui-compatversion="edge"
+    ></script>
+
+    <script id="myXml" type="text/xmldata">
+      <mvc:View
+        xmlns:mvc="sap.ui.core.mvc"
+        xmlns="sap.m"
+        xmlns:uxap="sap.uxap"
+        controllerName="myController"
+        displayBlock="true"
+      >
+        <App>
+          <Page title="Object Page Layout Example">
+            <uxap:ObjectPageLayout>
+              <uxap:headerTitle>
+                <uxap:ObjectPageHeader
+                  objectTitle="Main Object"
+                  objectSubtitle="Overview of the main object page"
+                  isObjectIconAlwaysVisible="true"
+                >
+                  <uxap:actions>
+                    <Button text="Edit" type="Emphasized" />
+                    <Button text="Share" icon="sap-icon://share" />
+                    <Button text="Demo Info" icon="sap-icon://hint" press=".onShowInfo" />
+                  </uxap:actions>
+                  <uxap:sideContent>
+                    <ObjectStatus title="Health" text="Good" state="Success" />
+                  </uxap:sideContent>
+                </uxap:ObjectPageHeader>
+              </uxap:headerTitle>
+              <uxap:headerContent>
+                <HBox renderType="Bare">
+                  <ObjectStatus title="Status" text="Active" state="Success" />
+                  <ObjectStatus title="Owner" text="Operations" state="None" />
+                  <ObjectNumber unit="Tasks" number="12" emphasized="false" />
+                </HBox>
+              </uxap:headerContent>
+              <uxap:sections>
+                <uxap:ObjectPageSection title="Status">
+                  <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                      <uxap:blocks>
+                        <Text text="Status content goes here." />
+                      </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                  </uxap:subSections>
+                </uxap:ObjectPageSection>
+                <uxap:ObjectPageSection title="Steps">
+                  <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                      <uxap:blocks>
+                        <Text text="Steps content goes here." />
+                      </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                  </uxap:subSections>
+                </uxap:ObjectPageSection>
+                <uxap:ObjectPageSection title="Parameters">
+                  <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                      <uxap:blocks>
+                        <Text text="Parameters content goes here." />
+                      </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                  </uxap:subSections>
+                </uxap:ObjectPageSection>
+                <uxap:ObjectPageSection title="New Section">
+                  <uxap:subSections>
+                    <uxap:ObjectPageSubSection>
+                      <uxap:blocks>
+                        <uxap:ObjectPageLayout>
+                          <uxap:headerTitle>
+                            <uxap:ObjectPageHeader
+                              objectTitle="Nested Object"
+                              objectSubtitle="Details within the new section"
+                              isObjectTitleAlwaysVisible="true"
+                            >
+                              <uxap:actions>
+                                <Button text="Refresh" icon="sap-icon://refresh" />
+                                <Button text="Open" type="Transparent" />
+                              </uxap:actions>
+                              <uxap:sideContent>
+                                <ObjectStatus title="Sync" text="Up to date" state="Success" />
+                              </uxap:sideContent>
+                            </uxap:ObjectPageHeader>
+                          </uxap:headerTitle>
+                          <uxap:headerContent>
+                            <HBox renderType="Bare">
+                              <ObjectNumber number="3" unit="Checks" emphasized="true" />
+                              <ObjectStatus title="Approval" text="Pending" state="Warning" />
+                              <ObjectStatus title="Priority" text="High" state="Error" />
+                            </HBox>
+                          </uxap:headerContent>
+                          <uxap:sections>
+                            <uxap:ObjectPageSection title="Nested Status">
+                              <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                  <uxap:blocks>
+                                    <Text text="Nested Status content goes here." />
+                                  </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                              </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                            <uxap:ObjectPageSection title="Nested Steps">
+                              <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                  <uxap:blocks>
+                                    <Text text="Nested Steps content goes here." />
+                                  </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                              </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                            <uxap:ObjectPageSection title="Nested Parameters">
+                              <uxap:subSections>
+                                <uxap:ObjectPageSubSection>
+                                  <uxap:blocks>
+                                    <Text text="Nested Parameters content goes here." />
+                                  </uxap:blocks>
+                                </uxap:ObjectPageSubSection>
+                              </uxap:subSections>
+                            </uxap:ObjectPageSection>
+                          </uxap:sections>
+                        </uxap:ObjectPageLayout>
+                      </uxap:blocks>
+                    </uxap:ObjectPageSubSection>
+                  </uxap:subSections>
+                </uxap:ObjectPageSection>
+              </uxap:sections>
+            </uxap:ObjectPageLayout>
+          </Page>
+        </App>
+      </mvc:View>
+    </script>
+
+    <script>
+      sap.ui.require(
+        ["sap/ui/core/mvc/Controller", "sap/ui/core/mvc/XMLView", "sap/m/MessageToast"],
+        function (Controller, XMLView, MessageToast) {
+          Controller.extend("myController", {
+            onInit: function () {
+              // Initialization code can go here
+            },
+            onShowInfo: function () {
+              MessageToast.show("Object Page Layout demo is running");
+            },
+          });
+
+          sap.ui.getCore().attachInit(function () {
+            XMLView.create({ definition: jQuery("#myXml").html() }).then(function (oView) {
+              oView.placeAt("content");
+            });
+          });
+        }
+      );
+    </script>
+  </head>
+  <body id="content" class="sapUiBody"></body>
+</html>
